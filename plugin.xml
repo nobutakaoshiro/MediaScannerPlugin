@@ -28,7 +28,7 @@
           </feature>
         </config-file>
 
-        <source-file src="src/android/MediaScannerPlugin.java" 
+        <source-file src="src/android/MediaScannerPlugin.java"
             target-dir="src/org/sfl/MediaScannerPlugin" />
 
     </platform>

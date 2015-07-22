@@ -20,17 +20,27 @@ import android.util.Log;
  * @author Peter Gao <peter@spacefluxlabs.com>
  */
 public class MediaScannerPlugin extends CordovaPlugin {
-    public static final String ACTION = "scanFile";
+    public  static final String SCAN_FILE_ACTION  = "scanFile";
+    public  static final String SCAN_FILES_ACTION = "scanFiles";
     private static final String TAG = "MediaScannerPlugin";
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        if (action.equals(ACTION)) {
+        if (action.equals(SCAN_FILES_ACTION)) {
             /* Invoke the system's media scanner to add your photo to the Media Provider's database,
             * making it available in the Android Gallery application and to other apps. */
-            cordova.getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file:///mnt/sdcard"))); 
+            cordova.getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file:///mnt/sdcard")));
 
+            callbackContext.success();
+
+            return true;
+
+        } else if (action.equals(SCAN_FILE_ACTION)) {
+            Intent mediaScanIntent = new Intent();
+            mediaScanIntent.setAction(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            mediaScanIntent.setData(Uri.parse(args.getString(0)));
+            cordova.getActivity().sendBroadcast(mediaScanIntent);
             callbackContext.success();
 
             return true;
